@@ -10,8 +10,8 @@ import Date from './components/date.vue';
 
 <style>
 html,
-body {
-  display: flex;
+body,
+#app {
   height: 100%;
   width: 100%;
   margin: 0;
