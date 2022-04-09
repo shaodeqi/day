@@ -1,13 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/zh-cn';
-
-dayjs.extend(duration);
-dayjs.extend(relativeTime);
-dayjs.locale('zh-cn');
+import humanize from 'humanize-duration';
 
 const knowDate = '2022-3-14 20:00';
 const durationTime = ref(+new Date() - +new Date(knowDate));
@@ -24,29 +17,15 @@ const count = ref(0);
 <template>
   <div class="date-wrap">
     <div>包子！与你相识</div>
-    <div>
-      <span v-if="dayjs.duration(durationTime).years()" class="count"
-        >{{ dayjs.duration(durationTime).years() }} <span class="unit">年</span>
-      </span>
-      <span v-if="dayjs.duration(durationTime).months()" class="count"
-        >{{ dayjs.duration(durationTime).months() }}
-        <span class="unit">年</span>
-      </span>
-      <span v-if="dayjs.duration(durationTime).days()" class="count"
-        >{{ dayjs.duration(durationTime).days() }}<span class="unit">天</span>
-      </span>
-      <span v-if="dayjs.duration(durationTime).hours()" class="count"
-        >{{ dayjs.duration(durationTime).hours()
-        }}<span class="unit">小时</span>
-      </span>
-      <span v-if="dayjs.duration(durationTime).minutes()" class="count"
-        >{{ dayjs.duration(durationTime).minutes()
-        }}<span class="unit">分钟</span>
-      </span>
-      <span v-if="dayjs.duration(durationTime).seconds()" class="count"
-        >{{ dayjs.duration(durationTime).seconds()
-        }}<span class="unit">秒</span>
-      </span>
+    <div class="count">
+      {{
+        humanize(durationTime, {
+          language: 'zh_CN',
+          delimiter: ' ',
+          round: true,
+          units: ['y', 'mo', 'd', 'h', 'm', 's'],
+        })
+      }}
     </div>
     <div class="shici">
       「<span id="jinrishici-sentence">正在加载今日诗词....</span>」
