@@ -57,7 +57,7 @@ const count = ref(0);
 <style scoped>
 .date-wrap {
   width: 100%;
-  margin-top: 100px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
