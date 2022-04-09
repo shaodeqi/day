@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import humanize from 'humanize-duration';
 
-const knowDate = '2022-3-14 20:00';
+const knowDate = 1647259200000;
 const durationTime = ref(+new Date() - +new Date(knowDate));
 setInterval(() => {
   durationTime.value = +new Date() - +new Date(knowDate);
