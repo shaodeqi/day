@@ -55,7 +55,7 @@ const getWeatherText = (textDay, textNight) => {
     </div>
 
     <!-- 天气 °C  -->
-    <div v-if="weather.daily" style="position: absolute; right: 5px; bottom: 5px; font-size: 14px; padding: 6px;">
+    <div v-if="weather.daily" style="position: absolute; right: 5px; bottom: 20px; font-size: 14px; padding: 6px;">
       <div>
         今天{{ getWeatherText(weather.daily[0].textDay, weather.daily[0].textNight) }}
         {{ weather.daily[0].tempMin }}-{{ weather.daily[0].tempMax }}°C
