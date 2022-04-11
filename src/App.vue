@@ -1,27 +1,68 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Date from './components/date.vue';
-</script>
-
 <template>
-  <Date />
+  <swiper direction="vertical">
+    <swiper-slide>
+      <Time />
+    </swiper-slide>
+    <!-- <swiper-slide>Slide 2</swiper-slide> -->
+  </swiper>
 </template>
+<script>
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+import Time from "./components/time.vue";
 
+// Import Swiper styles
+import "swiper/css";
+
+export default {
+  components: {
+    Swiper,
+    SwiperSlide,
+    Time,
+  },
+  setup() {
+    return {};
+  },
+};
+</script>
 <style>
 html,
-body,
+body {
+  margin: 0;
+  position: relative;
+  height: 100%;
+}
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
 #app {
   height: 100%;
   width: 100%;
-  margin: 0;
 }
-body {
-  background-image: linear-gradient(
-    45deg,
-    #ff9a9e 0%,
-    #fad0c4 99%,
-    #fad0c4 100%
-  );
+</style>
+<style scoped>
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
