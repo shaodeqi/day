@@ -8,7 +8,8 @@ export default defineConfig({
     vue(),
     viteStaticCopy({
       targets: [
-        { src: "src/assets/sdk", dest: "assets" },
+        { src: "src/assets/sdk", dest: "assets/" },
+        { src: "CNAME", dest: "assets/" },
       ],
     }),
   ],
