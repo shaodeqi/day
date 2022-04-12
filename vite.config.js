@@ -26,7 +26,7 @@ export default defineConfig({
         theme_color: "#b29dd1",
         background_color: "#b29dd1",
         lang: "en",
-        display: "standalone",
+        display: "fullscreen",
         icons: [
           {
             src: "./heart_48.png",
