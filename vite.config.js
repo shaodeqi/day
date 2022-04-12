@@ -23,7 +23,7 @@ export default defineConfig({
         description: "心动每一天",
         start_url: "/",
         scope: "/",
-        theme_color: "#b29dd1",
+        theme_color: "#f3bdbe",
         background_color: "#b29dd1",
         lang: "en",
         display: "fullscreen",
