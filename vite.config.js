@@ -16,13 +16,23 @@ export default defineConfig({
       ],
     }),
     VitePWA({
-      includeAssets: ["heart_192.png"],
+      includeAssets: ["./heart_192.png"],
       manifest: {
         name: "心动每一天",
         short_name: "HeartBeat",
         description: "心动每一天",
+        start_url: "/",
+        scope: "/",
         theme_color: "#b29dd1",
+        background_color: "#b29dd1",
+        lang: "en",
+        display: "standalone",
         icons: [
+          {
+            src: "./heart_48.png",
+            sizes: "48x48",
+            type: "image/png",
+          },
           {
             src: "./heart_192.png",
             sizes: "192x192",
@@ -36,8 +46,8 @@ export default defineConfig({
           {
             src: "./heart_512.png",
             sizes: "512x512",
-			type: 'image/png',
-			purpose: 'any maskable',
+            type: "image/png",
+            purpose: "any maskable",
           },
         ],
       },
