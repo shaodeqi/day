@@ -51,28 +51,33 @@
       </swiper-slide>
       <swiper-slide class="slide1">
         <div>女子图鉴</div>
-          <swiper
-            :effect="'cards'"
-            :grabCursor="true"
-            :modules="modules"
-            class="cards-swiper"
-            style="width: 300px; height: 300px; border-radius: 4px; margin-top:200px"
-          >
-            <swiper-slide>
-              <img
-                src="./assets/img/babe1.jpg"
-                style="width: 300px; height: 300px"
-                alt=""
-              />
-            </swiper-slide>
-            <swiper-slide>
-              <img
-                src="./assets/img/babe2.jpg"
-                style="width: 300px; height: 300px"
-                alt=""
-              />
-            </swiper-slide>
-          </swiper>
+        <swiper
+          :effect="'cards'"
+          :grabCursor="true"
+          :modules="modules"
+          style="
+            width: 300px;
+            height: 300px;
+            border-radius: 4px;
+            margin-top: 200px;
+            overflow: visible;
+          "
+        >
+          <swiper-slide>
+            <img
+              src="./assets/img/babe1.jpg"
+              style="width: 300px; height: 300px"
+              alt=""
+            />
+          </swiper-slide>
+          <swiper-slide>
+            <img
+              src="./assets/img/babe2.jpg"
+              style="width: 300px; height: 300px"
+              alt=""
+            />
+          </swiper-slide>
+        </swiper>
       </swiper-slide>
     </template>
   </swiper>
@@ -208,12 +213,4 @@ body {
   }
 }
 
-.slide0 {
-  // background-image: linear-gradient(
-  //   45deg,
-  //   #ff9a9e 0%,
-  //   #fad0c4 99%,
-  //   #fad0c4 100%
-  // );
-}
 </style>
