@@ -16,7 +16,7 @@ export default defineConfig({
       ],
     }),
     VitePWA({
-      includeAssets: ["./heart_192.png"],
+      includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
       manifest: {
         name: "心动每一天",
         short_name: "HeartBeat",
@@ -29,27 +29,27 @@ export default defineConfig({
         display: "fullscreen",
         icons: [
           {
-            src: "./heart_48.png",
-            sizes: "48x48",
+            src: "/favicon-16x16.png",
+            sizes: "16x16",
             type: "image/png",
           },
           {
-            src: "./heart_128.png",
-            sizes: "128x128",
+            src: "/favicon-32x32.png",
+            sizes: "32x32",
             type: "image/png",
-          },
+		  },
           {
-            src: "./heart_192.png",
+            src: "/android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "./heart_512.png",
+            src: "/android-chrome-512x512.png",
             sizes: "512x512",
             type: "image/png",
           },
           {
-            src: "./heart_512.png",
+            src: "/android-chrome-512x512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable",
