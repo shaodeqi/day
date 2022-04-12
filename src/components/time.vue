@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { chineseDay } from "../config/constants";
-
+const emit = defineEmits()
 const knowDate = 1647259200000;
 const getDuration = () => {
   const durationTimestamp = +new Date() - knowDate;
@@ -62,9 +62,23 @@ const getWeatherText = (daily) => {
   }
   return `白天${daily.textDay} 夜晚${daily.textNight} ${daily.tempMin}-${daily.tempMax}°C`;
 };
+
 const header = {
   date: `${new Date().getMonth() + 1}/${new Date().getDate()}`,
   day: `星期${chineseDay[new Date().getDay()]}`,
+};
+
+const clickCount = ref(0);
+const handleClickIcon = () => {
+  clickCount.value = clickCount.value + 1;
+  console.log(clickCount.value);
+  setTimeout(() => {
+    clickCount.value = 0;
+  }, 1000);
+  if (clickCount.value >= 3) {
+    emit('iconClick');
+    clickCount.value = 0;
+  }
 };
 </script>
 
@@ -79,12 +93,16 @@ const header = {
     <div class="content">
       <div>德总&包子相识</div>
       <div style="font-size: 88px; font-weight: bold">
-        <span v-if="+duration.years > 0">{{ duration.years }}年</span
-        ><span
+        <span v-if="+duration.years > 0">{{ duration.years }}年</span>
+        <span
+          v-if="+duration.days > 0"
           :style="{
             'font-size': +duration.years > 0 ? '36px' : 'unset',
           }"
           ><span v-if="+duration.years > 0">零</span>{{ duration.days }}天</span
+        >
+        <span v-if="+duration.days === 0" class="memorial-day-label"
+          >{{ duration.years }}周年纪念日</span
         >
       </div>
       <div style="font-size: 26px">
@@ -98,7 +116,7 @@ const header = {
         <span id="jinrishici-sentence">春宵一刻值千金，花有清香月有阴</span>
       </div>
       <div class="weather-block">
-        <div class="icon">天气</div>
+        <div @click="handleClickIcon" class="icon">天气</div>
         <div>
           <div>今日{{ getWeatherText(weather.daily[0]) }}</div>
           <div style="margin-top: 5px">
@@ -135,6 +153,22 @@ const header = {
     flex: 1;
     margin-top: 112px;
   }
+  .memorial-day-label {
+    position: relative;
+    font-size: 18px;
+    margin-left: 10px;
+    border-radius: 4px;
+    background: linear-gradient(45deg, rgb(68, 47, 17), rgb(215, 163, 160));
+    padding: 5px 10px;
+    &::after {
+      content: "🎁";
+      font-size: 28px;
+      position: absolute;
+      right: -15px;
+      top: -20px;
+      transform: rotate(15deg);
+    }
+  }
   .footer {
     .weather-block {
       display: flex;
@@ -150,6 +184,9 @@ const header = {
         background: #fff;
         color: #b29dd1;
         font-weight: bold;
+        &:active {
+          opacity: 0.8;
+        }
       }
     }
   }

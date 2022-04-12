@@ -1,9 +1,54 @@
 <template>
   <swiper direction="vertical" class="swiper-wrap">
     <swiper-slide class="slide0" style="background: #999">
-      <Time />
+      <Time @icon-click="locked = false" />
     </swiper-slide>
-    <template v-if="false">
+    <template v-if="!locked">
+      <swiper-slide class="slide1">
+        <div class="text date" style="left: 50px; top: 30px">2022.3.14</div>
+        <div class="text" style="left: 50px; top: 80px">第一次打台球</div>
+        <div class="text" style="left: 50px; top: 130px">
+          那一天，我开始失眠
+        </div>
+      </swiper-slide>
+      <swiper-slide class="slide2">
+        <div class="text date" style="left: 50px; top: 30px">2022.4.5</div>
+        <div class="text" style="left: 50px; top: 80px">第一次一起打羽毛球</div>
+        <div class="text" style="left: 50px; top: 130px">
+          那一天我们在公司加班很晚，却好像没工作5分钟
+        </div>
+      </swiper-slide>
+      <swiper-slide class="slide2">
+        <div class="text date" style="left: 50px; top: 30px">2022.4.8</div>
+        <div class="text" style="left: 50px; top: 80px">第一次一起看电影</div>
+        <img
+          src="./assets/img/movie.jpg"
+          style="
+            width: 200px;
+            height: auto;
+            position: absolute;
+            left: 100px;
+            top: 200px;
+          "
+          alt=""
+        />
+      </swiper-slide>
+      <swiper-slide class="slide3">
+        <div class="text date" style="left: 50px; top: 30px">2022.4.10</div>
+        <div class="text" style="left: 50px; top: 80px">发现一只蜗牛</div>
+        <div class="text" style="left: 50px; top: 120px">它爬的很慢</div>
+        <img
+          src="./assets/img/woniu.png"
+          style="
+            width: 200px;
+            height: auto;
+            position: absolute;
+            left: 100px;
+            top: 200px;
+          "
+          alt=""
+        />
+      </swiper-slide>
       <swiper-slide class="slide1">
         <div>女子图鉴</div>
         <div class="container">
@@ -13,33 +58,29 @@
             :modules="modules"
             class="cards-swiper"
           >
-            <swiper-slide>Slide 1</swiper-slide
-            ><swiper-slide>Slide 2</swiper-slide
-            ><swiper-slide>Slide 3</swiper-slide
-            ><swiper-slide>Slide 4</swiper-slide
-            ><swiper-slide>Slide 5</swiper-slide
-            ><swiper-slide>Slide 6</swiper-slide
-            ><swiper-slide>Slide 7</swiper-slide
-            ><swiper-slide>Slide 8</swiper-slide
-            ><swiper-slide>Slide 9</swiper-slide>
+            <swiper-slide>
+              <img
+                src="./assets/img/babe1.jpg"
+                style="
+                  width: 200px;
+                  height: 200px;
+                "
+                alt=""
+              /> </swiper-slide
+            >
+            <swiper-slide>
+              <img
+                src="./assets/img/babe2.jpg"
+                style="
+                  width: 200px;
+                  height: 200px;
+                "
+                alt=""
+              /> </swiper-slide
+            >
+            
           </swiper>
         </div>
-      </swiper-slide>
-      <swiper-slide class="slide1">
-        <div class="text date" style="left: 50px; top: 30px;">2022.3.14</div>
-        <div class="text"  style="left: 50px; top: 80px;">第一次打台球</div>
-      </swiper-slide>
-      <swiper-slide class="slide2">
-        <div>2022.3.14</div>
-      </swiper-slide>
-      <swiper-slide class="slide3">
-        <div>2022.4.10</div>
-        <div>我们在闲逛的时候发现一只蜗牛，它爬的很慢很慢</div>
-        <img
-          src="./assets/img/woniu.png"
-          style="width: 200px; height: auto"
-          alt=""
-        />
       </swiper-slide>
     </template>
   </swiper>
@@ -102,6 +143,7 @@ const bgImgList = [
 
 // Import Swiper styles
 import "swiper/css";
+import { ref } from "@vue/reactivity";
 
 export default {
   components: {
@@ -115,6 +157,7 @@ export default {
     return {
       modules: [EffectCards],
       bgImg,
+      locked: ref(true),
     };
   },
 };
@@ -127,7 +170,7 @@ body {
   height: 100%;
 }
 * {
- box-sizing: border-box;
+  box-sizing: border-box;
 }
 body {
   background: #eee;
@@ -150,7 +193,7 @@ body {
 
 .swiper-slide {
   font-size: 18px;
-  background: #fff;
+  background: linear-gradient(#f3bdbe, #b29dd1);
 }
 
 .swiper-slide img {
@@ -180,50 +223,5 @@ body {
   //   #fad0c4 99%,
   //   #fad0c4 100%
   // );
-}
-.slide1 {
-  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
-  .swiper-slide {
-    // align-items: center;
-    // justify-content: center;
-    border-radius: 18px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fff;
-  }
-}
-.slide2 {
-  background-image: radial-gradient(rgb(187, 218, 251), rgb(130, 189, 249));
-}
-.slide3 {
-  background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
-}
-.slide4 {
-  background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
-}
-.slide5 {
-  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
-}
-.slide6 {
-  background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
-}
-.slide7 {
-  background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
-}
-.slide8 {
-  background-image: linear-gradient(to top, #96fbc4 0%, #f9f586 100%);
-}
-.slide9 {
-  background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-}
-.slide10 {
-  background-image: linear-gradient(
-    to right,
-    #eea2a2 0%,
-    #bbc1bf 19%,
-    #57c6e1 42%,
-    #b49fda 79%,
-    #7ac5d8 100%
-  );
 }
 </style>
