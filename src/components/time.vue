@@ -6,23 +6,38 @@ const knowDate = 1647259200000;
 const getDuration = () => {
   const durationTimestamp = +new Date() - knowDate;
   const years = Math.floor(durationTimestamp / 31536000000);
-  const days = Math.floor((durationTimestamp -  31536000000 * years) / 86400000);
-  const hours = Math.floor((durationTimestamp -  31536000000 * years - 86400000 * days) / 3600000);
-  const minutes = Math.floor((durationTimestamp -  31536000000 * years - 86400000 * days - 3600000 * hours) / 60000);
-  const seconds = Math.floor((durationTimestamp -  31536000000 * years - 86400000 * days - 3600000 * hours - 60000 * minutes) / 1000);
+  const days = Math.floor((durationTimestamp - 31536000000 * years) / 86400000);
+  const hours = Math.floor(
+    (durationTimestamp - 31536000000 * years - 86400000 * days) / 3600000
+  );
+  const minutes = Math.floor(
+    (durationTimestamp -
+      31536000000 * years -
+      86400000 * days -
+      3600000 * hours) /
+      60000
+  );
+  const seconds = Math.floor(
+    (durationTimestamp -
+      31536000000 * years -
+      86400000 * days -
+      3600000 * hours -
+      60000 * minutes) /
+      1000
+  );
   return {
     years,
     days,
     hours,
     minutes,
     seconds,
-  }
-}
+  };
+};
 
-const duration = ref(getDuration())
+const duration = ref(getDuration());
 
 setInterval(() => {
-  duration.value = getDuration()
+  duration.value = getDuration();
 }, 500);
 
 /* 天气 */
@@ -63,13 +78,19 @@ const header = {
     </div>
     <div class="content">
       <div>德总&包子相识</div>
-      <div style="font-size: 88px; font-weight: bold;">
-        <span v-if="+duration.years > 0">{{duration.years}} 年零</span><span>{{duration.days}}天</span>
+      <div style="font-size: 88px; font-weight: bold">
+        <span v-if="+duration.years > 0">{{ duration.years }}年</span
+        ><span
+          :style="{
+            'font-size': +duration.years > 0 ? '36px' : 'unset',
+          }"
+          ><span v-if="+duration.years > 0">零</span>{{ duration.days }}天</span
+        >
       </div>
-      <div style="font-size: 26px;">
-        <span v-if="+duration.hours > 0">{{duration.hours}} 小时 </span>
-        <span v-if="+duration.minutes > 0">{{duration.minutes}} 分钟 </span>
-        <span v-if="+duration.seconds > 0">{{duration.seconds}} 秒</span>
+      <div style="font-size: 26px">
+        <span v-if="+duration.hours > 0">{{ duration.hours }} 小时 </span>
+        <span v-if="+duration.minutes > 0">{{ duration.minutes }} 分钟 </span>
+        <span v-if="+duration.seconds > 0">{{ duration.seconds }} 秒</span>
       </div>
     </div>
     <div class="footer">

@@ -1,9 +1,9 @@
 <template>
   <swiper direction="vertical" class="swiper-wrap">
-    <swiper-slide class="slide0" style="background: #999" :style="bgImg">
+    <swiper-slide class="slide0" style="background: #999">
       <Time />
     </swiper-slide>
-    <div v-if="false">
+    <template v-if="false">
       <swiper-slide class="slide1">
         <div>女子图鉴</div>
         <div class="container">
@@ -41,7 +41,7 @@
           alt=""
         />
       </swiper-slide>
-    </div>
+    </template>
   </swiper>
 </template>
 <script>
