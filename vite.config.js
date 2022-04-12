@@ -34,6 +34,11 @@ export default defineConfig({
             type: "image/png",
           },
           {
+            src: "./heart_128.png",
+            sizes: "128x128",
+            type: "image/png",
+          },
+          {
             src: "./heart_192.png",
             sizes: "192x192",
             type: "image/png",
