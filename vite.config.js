@@ -12,7 +12,7 @@ export default defineConfig({
         { src: "src/assets/sdk", dest: "assets/" },
         { src: "src/assets/img", dest: "assets/" },
         { src: "CNAME", dest: "" },
-        { src: "src/public", dest: "" },
+        { src: "src/public/*", dest: "" },
       ],
     }),
     VitePWA({
