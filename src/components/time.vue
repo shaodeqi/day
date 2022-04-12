@@ -39,7 +39,7 @@ const getWeatherText = (textDay, textNight) => {
 
 <template>
   <div class="time-wrap">
-    <div>包子！与你相识</div>
+    <div style="margin-bottom: 5px;">包子！与你相识</div>
     <div class="count">
       {{
         humanize(durationTime, {
@@ -47,22 +47,22 @@ const getWeatherText = (textDay, textNight) => {
           delimiter: " ",
           round: true,
           units: ["y", "mo", "d", "h", "m", "s"],
+          largest: 4,
         })
       }}
     </div>
-    <div class="shici">
+    <div class="shici" style="color: rgba(255, 255, 255, 0.7); font-style: italic;">
       「<span id="jinrishici-sentence">一日不见兮，思之如狂。</span>」
     </div>
 
     <!-- 天气 °C  -->
-    <div v-if="weather.daily" style="position: absolute; right: 5px; bottom: 20px; font-size: 14px; padding: 6px;">
+    <div v-if="weather.daily" style="font-family: monospace;position: absolute; right: 5px; bottom: 20px; font-size: 14px; padding: 6px;">
       <div>
         今天{{ getWeatherText(weather.daily[0].textDay, weather.daily[0].textNight) }}
         {{ weather.daily[0].tempMin }}-{{ weather.daily[0].tempMax }}°C
-        <!-- 明日{{ weather.daily[1].tempMin  }}-{{ weather.daily[1].tempMax }}°C -->
         <span v-if="weather.indice">{{ weather.indice[0].text }}</span>
       </div>
-      <div style="font-size: 12px; margin-top: 5px; color: #fad0c4;">
+      <div style="font-size: 12px; margin-top: 5px; color: rgb(255, 255, 255, 0.5);">
         明天{{ getWeatherText(weather.daily[1].textDay, weather.daily[1].textNight) }}
         {{ weather.daily[1].tempMin }}-{{ weather.daily[1].tempMax }}°C
       </div>
@@ -78,16 +78,10 @@ const getWeatherText = (textDay, textNight) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  background-image: linear-gradient(
-    45deg,
-    #ff9a9e 0%,
-    #fad0c4 99%,
-    #fad0c4 100%
-  );
 }
 .count {
-  font-size: 26px;
+  font-size: 28px;
+  font-weight: bold;
 }
 .unit {
   font-size: 20px;

@@ -9,6 +9,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         { src: "src/assets/sdk", dest: "assets/" },
+        { src: "src/assets/img", dest: "assets/" },
         { src: "CNAME", dest: "" },
       ],
     }),
