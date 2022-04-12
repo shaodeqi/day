@@ -51,36 +51,28 @@
       </swiper-slide>
       <swiper-slide class="slide1">
         <div>女子图鉴</div>
-        <div class="container">
           <swiper
             :effect="'cards'"
             :grabCursor="true"
             :modules="modules"
             class="cards-swiper"
+            style="width: 300px; height: 300px; border-radius: 4px; margin-top:200px"
           >
             <swiper-slide>
               <img
                 src="./assets/img/babe1.jpg"
-                style="
-                  width: 200px;
-                  height: 200px;
-                "
+                style="width: 300px; height: 300px"
                 alt=""
-              /> </swiper-slide
-            >
+              />
+            </swiper-slide>
             <swiper-slide>
               <img
                 src="./assets/img/babe2.jpg"
-                style="
-                  width: 200px;
-                  height: 200px;
-                "
+                style="width: 300px; height: 300px"
                 alt=""
-              /> </swiper-slide
-            >
-            
+              />
+            </swiper-slide>
           </swiper>
-        </div>
       </swiper-slide>
     </template>
   </swiper>
