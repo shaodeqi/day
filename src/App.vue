@@ -1,5 +1,8 @@
 <template>
-  <swiper direction="vertical" class="swiper-wrap">
+  <swiper
+    class="swiper-wrap"
+    :edge-swipe-detection="true"
+  >
     <swiper-slide class="slide0" style="background: #999">
       <Time @icon-click="locked = false" />
     </swiper-slide>
@@ -55,6 +58,7 @@
           :effect="'cards'"
           :grabCursor="true"
           :modules="modules"
+          :loop="true"
           style="
             width: 300px;
             height: 300px;
@@ -207,10 +211,8 @@ body {
     color: #333;
     font-size: 32px;
     &.date {
-      font-family: fantasy;
       font-weight: bold;
     }
   }
 }
-
 </style>

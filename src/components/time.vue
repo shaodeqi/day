@@ -1,25 +1,43 @@
 <script setup>
 import { ref } from "vue";
-import { chineseDay } from "../config/constants";
-const emit = defineEmits()
+import { chineseDay } from "../utils/constants";
+import { countLeapYears, fixPrecision, isLeapYear } from "../utils/index";
+const emit = defineEmits();
+
 const knowDate = 1647259200000;
-const getDuration = () => {
-  const durationTimestamp = +new Date() - knowDate;
-  const years = Math.floor(durationTimestamp / 31536000000);
-  const days = Math.floor((durationTimestamp - 31536000000 * years) / 86400000);
+let date = ref(new Date());
+const getDuration = (date = new Date()) => {
+  const leapYearsCount = Math.round(
+    countLeapYears(date.getFullYear()) -
+      countLeapYears(new Date(knowDate).getFullYear())
+  );
+  const durationTimestamp = +date - knowDate;
+  const years = Math.floor(
+    (durationTimestamp - leapYearsCount * 31622400000) / 31536000000 +
+      leapYearsCount
+  );
+  const yearsTimestamp =
+    31622400000 * leapYearsCount + 31536000000 * (years - leapYearsCount);
+
+  const days = Math.floor((durationTimestamp - yearsTimestamp) / 86400000);
+  /* 闰年年份 1/1 - 3/14 由于 yearsTimestamp 多算一天，会导致天数少一天，展示上需要加回来 */
+  const daysShow =
+    isLeapYear(date.getFullYear()) &&
+    +(+`${date.getMonth() + 1}${date.getDate()}`) <=
+      +(+`${new Date(knowDate).getMonth() + 1}${new Date(knowDate).getDate()}`) &&
+      +date % (24 * 60 *60 * 1000) < +new Date(knowDate) % (24 * 60 *60 * 1000)
+      ? days + 1
+      : days;
   const hours = Math.floor(
-    (durationTimestamp - 31536000000 * years - 86400000 * days) / 3600000
+    (durationTimestamp - yearsTimestamp - 86400000 * days) / 3600000
   );
   const minutes = Math.floor(
-    (durationTimestamp -
-      31536000000 * years -
-      86400000 * days -
-      3600000 * hours) /
+    (durationTimestamp - yearsTimestamp - 86400000 * days - 3600000 * hours) /
       60000
   );
   const seconds = Math.floor(
     (durationTimestamp -
-      31536000000 * years -
+      yearsTimestamp -
       86400000 * days -
       3600000 * hours -
       60000 * minutes) /
@@ -27,7 +45,7 @@ const getDuration = () => {
   );
   return {
     years,
-    days,
+    days: daysShow,
     hours,
     minutes,
     seconds,
@@ -37,7 +55,17 @@ const getDuration = () => {
 const duration = ref(getDuration());
 
 setInterval(() => {
-  duration.value = getDuration();
+  date.value = new Date();
+  duration.value = getDuration(date.value);
+  // 每半小时拉一次
+  if (
+    (date.value.getMinutes() === 0 || date.value.getMinutes() === 30) &&
+    date.value.getSeconds() === 0 &&
+    date.value.getMilliseconds() > 500 &&
+    date.value.getMilliseconds() < 999
+  ) {
+    fetchWeather();
+  }
 }, 500);
 
 /* 天气 */
@@ -45,13 +73,16 @@ const weather = ref({
   daily: [],
   indice: [],
 });
-fetch(
-  "https://devapi.qweather.com/v7/weather/3d?location=116.27,40.04&key=350580cf5ace4eda8d25e97059810017"
-)
-  .then((res) => res.json())
-  .then((res) => {
-    weather.value.daily = res.daily;
-  });
+const fetchWeather = () => {
+  fetch(
+    "https://devapi.qweather.com/v7/weather/3d?location=116.27,40.04&key=350580cf5ace4eda8d25e97059810017"
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      weather.value.daily = res.daily;
+    });
+};
+fetchWeather();
 
 const getWeatherText = (daily) => {
   if (!daily) {
@@ -71,12 +102,11 @@ const header = {
 const clickCount = ref(0);
 const handleClickIcon = () => {
   clickCount.value = clickCount.value + 1;
-  console.log(clickCount.value);
   setTimeout(() => {
     clickCount.value = 0;
   }, 1000);
   if (clickCount.value >= 3) {
-    emit('iconClick');
+    emit("iconClick");
     clickCount.value = 0;
   }
 };
@@ -101,8 +131,14 @@ const handleClickIcon = () => {
           }"
           ><span v-if="+duration.years > 0">零</span>{{ duration.days }}天</span
         >
-        <span v-if="+duration.days === 0" class="memorial-day-label"
-          >{{ duration.years }}周年纪念日</span
+        <span
+          v-if="
+            +duration.years > 0 &&
+            date.getMonth() === 2 &&
+            date.getDate() === 14
+          "
+          class="memorial-day-label"
+          >{{ fixPrecision(date.getFullYear() - 2022) }}周年纪念日</span
         >
       </div>
       <div style="font-size: 26px">
@@ -154,7 +190,9 @@ const handleClickIcon = () => {
     margin-top: 112px;
   }
   .memorial-day-label {
-    position: relative;
+    position: absolute;
+    right: 40px;
+    transform: rotate(20deg);
     font-size: 18px;
     margin-left: 10px;
     border-radius: 4px;
