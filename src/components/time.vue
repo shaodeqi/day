@@ -24,8 +24,10 @@ const getDuration = (date = new Date()) => {
   const daysShow =
     isLeapYear(date.getFullYear()) &&
     +(+`${date.getMonth() + 1}${date.getDate()}`) <=
-      +(+`${new Date(knowDate).getMonth() + 1}${new Date(knowDate).getDate()}`) &&
-      +date % (24 * 60 *60 * 1000) < +new Date(knowDate) % (24 * 60 *60 * 1000)
+      +(+`${new Date(knowDate).getMonth() + 1}${new Date(
+        knowDate
+      ).getDate()}`) &&
+    +date % (24 * 60 * 60 * 1000) < +new Date(knowDate) % (24 * 60 * 60 * 1000)
       ? days + 1
       : days;
   const hours = Math.floor(
@@ -140,6 +142,15 @@ const handleClickIcon = () => {
           class="memorial-day-label"
           >{{ fixPrecision(date.getFullYear() - 2022) }}周年纪念日</span
         >
+        <span
+          v-if="
+            +duration.years === 0 &&
+            date.getMonth() === 3 &&
+            date.getDate() === 14
+          "
+          class="confession-label"
+          >表白成功</span
+        >
       </div>
       <div style="font-size: 26px">
         <span v-if="+duration.hours > 0">{{ duration.hours }} 小时 </span>
@@ -200,6 +211,24 @@ const handleClickIcon = () => {
     padding: 5px 10px;
     &::after {
       content: "🎁";
+      font-size: 28px;
+      position: absolute;
+      right: -15px;
+      top: -20px;
+      transform: rotate(15deg);
+    }
+  }
+  .confession-label {
+    position: absolute;
+    right: 40px;
+    transform: rotate(20deg);
+    font-size: 18px;
+    margin-left: 10px;
+    border-radius: 4px;
+    background: linear-gradient(45deg, rgb(222, 50, 0), rgb(215, 163, 160));
+    padding: 5px 10px;
+    &::after {
+      content: "🎈";
       font-size: 28px;
       position: absolute;
       right: -15px;

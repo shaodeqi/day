@@ -2,6 +2,7 @@
   <swiper
     class="swiper-wrap"
     :edge-swipe-detection="true"
+    @slideChangeTransitionEnd="handleActiveIndexChange"
   >
     <swiper-slide class="slide0" style="background: #999">
       <Time @icon-click="locked = false" />
@@ -153,12 +154,19 @@ export default {
     Time,
   },
   setup() {
+    const locked = ref(true);
     const bgImg =
       bgImgList[Math.floor(+new Date() / 86400000) % bgImgList.length];
+    const handleActiveIndexChange = ({activeIndex}) => {
+      if (activeIndex === 0) {
+        locked.value = true;
+      }
+    }
     return {
-      modules: [EffectCards],
+      locked,
       bgImg,
-      locked: ref(true),
+      modules: [EffectCards],
+      handleActiveIndexChange,
     };
   },
 };
