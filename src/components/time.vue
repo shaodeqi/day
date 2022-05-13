@@ -59,7 +59,7 @@ const duration = ref(getDuration());
 setInterval(() => {
   date.value = new Date();
   duration.value = getDuration(date.value);
-  // 每半小时拉一次
+  // 每半小时拉一次天气
   if (
     (date.value.getMinutes() === 0 || date.value.getMinutes() === 30) &&
     date.value.getSeconds() === 0 &&
@@ -70,7 +70,7 @@ setInterval(() => {
   }
 }, 500);
 
-/* 天气 */
+/* 获取天气 */
 const weather = ref({
   daily: [],
   indice: [],
@@ -84,7 +84,7 @@ const fetchWeather = () => {
       weather.value.daily = res.daily;
     });
 };
-fetchWeather();
+setTimeout(fetchWeather)
 
 const getWeatherText = (daily) => {
   if (!daily) {
@@ -101,6 +101,7 @@ const header = {
   day: `星期${chineseDay[new Date().getDay()]}`,
 };
 
+/* 彩蛋锁 🔒 */
 const clickCount = ref(0);
 const handleClickIcon = () => {
   clickCount.value = clickCount.value + 1;
