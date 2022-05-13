@@ -11,9 +11,21 @@
       <swiper-slide class="slide1">
         <div class="text date" style="left: 50px; top: 30px">2022.3.14</div>
         <div class="text" style="left: 50px; top: 80px">第一次打台球</div>
-        <div class="text" style="left: 50px; top: 130px">
+        <div class="text" style="left: 50px; top: 110px">
           那一天，我开始失眠
         </div>
+        <img
+          src="./assets/img/billiards.jpg"
+          style="
+            width: 200px;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            margin-left: -100px;
+            top: 200px;
+          "
+          alt=""
+        />
       </swiper-slide>
       <swiper-slide class="slide2">
         <div class="text date" style="left: 50px; top: 30px">2022.4.5</div>
@@ -31,7 +43,8 @@
             width: 200px;
             height: auto;
             position: absolute;
-            left: 100px;
+            left: 50%;
+            margin-left: -100px;
             top: 200px;
           "
           alt=""
@@ -47,7 +60,36 @@
             width: 200px;
             height: auto;
             position: absolute;
-            left: 100px;
+            left: 50%;
+            margin-left: -100px;
+            top: 200px;
+          "
+          alt=""
+        />
+      </swiper-slide>
+      <swiper-slide class="slide4">
+        <div class="text date" style="left: 50px; top: 30px">2022.4.16</div>
+        <div class="text" style="left: 50px; top: 80px">
+          第一次...在家吃火锅
+        </div>
+      </swiper-slide>
+      <!-- 
+        4.17 吃烤肉
+        4.18 一起健身
+        5.1 逛中关村公园
+        5.3 剧本杀
+        5.8 爬山
+
+       -->
+      <swiper-slide class="slide5">
+        <img
+          src="./assets/img/stitch_angel.png"
+          style="
+            width: 200px;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            margin-left: -100px;
             top: 200px;
           "
           alt=""
@@ -157,11 +199,11 @@ export default {
     const locked = ref(true);
     const bgImg =
       bgImgList[Math.floor(+new Date() / 86400000) % bgImgList.length];
-    const handleActiveIndexChange = ({activeIndex}) => {
+    const handleActiveIndexChange = ({ activeIndex }) => {
       if (activeIndex === 0) {
         locked.value = true;
       }
-    }
+    };
     return {
       locked,
       bgImg,
@@ -171,33 +213,11 @@ export default {
   },
 };
 </script>
-<style>
-html,
-body {
-  margin: 0;
-  position: relative;
-  height: 100%;
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  background: #eee;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
-  margin: 0;
-  padding: 0;
-}
-#app {
-  height: 100%;
-  width: 100%;
-}
-</style>
 <style scoped lang="scss">
 .swiper {
   width: 100%;
   height: 100%;
+  color: #fff;
 }
 
 .swiper-slide {
@@ -213,14 +233,10 @@ body {
 }
 
 .swiper-wrap {
-  color: #fff;
   .text {
     position: absolute;
-    color: #333;
-    font-size: 32px;
-    &.date {
-      font-weight: bold;
-    }
+    color: #fff;
+    font-size: 26px;
   }
 }
 </style>
