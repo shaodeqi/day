@@ -1,64 +1,22 @@
 <script setup>
-import { ref } from "vue";
-import { chineseDay } from "../utils/constants";
-import { countLeapYears, fixPrecision, isLeapYear } from "../utils/index";
+import { ref } from 'vue';
+import { chineseDay } from '../utils/constants';
+import {
+  countLeapYears,
+  fixPrecision,
+  getDuration,
+  isLeapYear,
+} from '../utils/index';
 const emit = defineEmits();
 
 const knowDate = 1647259200000;
 let date = ref(new Date());
-const getDuration = (date = new Date()) => {
-  const leapYearsCount = Math.round(
-    countLeapYears(date.getFullYear()) -
-      countLeapYears(new Date(knowDate).getFullYear())
-  );
-  const durationTimestamp = +date - knowDate;
-  const years = Math.floor(
-    (durationTimestamp - leapYearsCount * 31622400000) / 31536000000 +
-      leapYearsCount
-  );
-  const yearsTimestamp =
-    31622400000 * leapYearsCount + 31536000000 * (years - leapYearsCount);
 
-  const days = Math.floor((durationTimestamp - yearsTimestamp) / 86400000);
-  /* 闰年年份 1/1 - 3/14 由于 yearsTimestamp 多算一天，会导致天数少一天，展示上需要加回来 */
-  const daysShow =
-    isLeapYear(date.getFullYear()) &&
-    +(+`${date.getMonth() + 1}${date.getDate()}`) <=
-      +(+`${new Date(knowDate).getMonth() + 1}${new Date(
-        knowDate
-      ).getDate()}`) &&
-    +date % (24 * 60 * 60 * 1000) < +new Date(knowDate) % (24 * 60 * 60 * 1000)
-      ? days + 1
-      : days;
-  const hours = Math.floor(
-    (durationTimestamp - yearsTimestamp - 86400000 * days) / 3600000
-  );
-  const minutes = Math.floor(
-    (durationTimestamp - yearsTimestamp - 86400000 * days - 3600000 * hours) /
-      60000
-  );
-  const seconds = Math.floor(
-    (durationTimestamp -
-      yearsTimestamp -
-      86400000 * days -
-      3600000 * hours -
-      60000 * minutes) /
-      1000
-  );
-  return {
-    years,
-    days: daysShow,
-    hours,
-    minutes,
-    seconds,
-  };
-};
-
-const duration = ref(getDuration());
+const duration = ref(getDuration(knowDate, date.value));
 
 setInterval(() => {
   date.value = new Date();
-  duration.value = getDuration(date.value);
+  duration.value = getDuration(knowDate, date.value);
   // 每半小时拉一次天气
   if (
     (date.value.getMinutes() === 0 || date.value.getMinutes() === 30) &&
@@ -77,18 +35,18 @@ const weather = ref({
 });
 const fetchWeather = () => {
   fetch(
-    "https://devapi.qweather.com/v7/weather/3d?location=116.27,40.04&key=350580cf5ace4eda8d25e97059810017"
+    'https://devapi.qweather.com/v7/weather/3d?location=116.27,40.04&key=350580cf5ace4eda8d25e97059810017'
   )
     .then((res) => res.json())
     .then((res) => {
       weather.value.daily = res.daily;
     });
 };
-setTimeout(fetchWeather)
+setTimeout(fetchWeather);
 
 const getWeatherText = (daily) => {
   if (!daily) {
-    return "--";
+    return '--';
   }
   if (daily.textDay === daily.textNight) {
     return `${daily.textDay} ${daily.tempMin}-${daily.tempMax}°C`;
@@ -109,7 +67,7 @@ const handleClickIcon = () => {
     clickCount.value = 0;
   }, 1000);
   if (clickCount.value >= 3) {
-    emit("iconClick");
+    emit('iconClick');
     clickCount.value = 0;
   }
 };
@@ -124,7 +82,7 @@ const handleClickIcon = () => {
       </div>
     </div>
     <div class="content">
-      <div>德总&包子相识</div>
+      <div>刀刀&包包相识</div>
       <div style="font-size: 88px; font-weight: bold">
         <span v-if="+duration.years > 0">{{ duration.years }}年</span>
         <span
@@ -137,11 +95,11 @@ const handleClickIcon = () => {
         <span
           v-if="
             +duration.years > 0 &&
-            date.getMonth() === 2 &&
-            date.getDate() === 14
+            date.getMonth() === new Date(knowDate).getMonth() &&
+            date.getDate() === new Date(knowDate).getDate()
           "
           class="memorial-day-label"
-          >{{ fixPrecision(date.getFullYear() - 2022) }}周年纪念日</span
+          >{{ fixPrecision(date.getFullYear() - new Date(knowDate).getFullYear()) }}周年纪念日</span
         >
         <span
           v-if="
@@ -211,7 +169,7 @@ const handleClickIcon = () => {
     background: linear-gradient(45deg, rgb(68, 47, 17), rgb(215, 163, 160));
     padding: 5px 10px;
     &::after {
-      content: "🎁";
+      content: '🎁';
       font-size: 28px;
       position: absolute;
       right: -15px;
@@ -229,7 +187,7 @@ const handleClickIcon = () => {
     background: linear-gradient(45deg, rgb(222, 50, 0), rgb(215, 163, 160));
     padding: 5px 10px;
     &::after {
-      content: "🎈";
+      content: '🎈';
       font-size: 28px;
       position: absolute;
       right: -15px;
