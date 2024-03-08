@@ -158,6 +158,7 @@ const handleClickIcon = () => {
   .content {
     flex: 1;
     margin-top: 112px;
+    font-family: monospace;
   }
   .memorial-day-label {
     position: absolute;
